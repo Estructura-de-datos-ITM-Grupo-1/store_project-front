@@ -1,15 +1,14 @@
 import { useRoutes } from 'react-router-dom';
-import {
-  Dashboard,
-  Dispatches,
-  Drivers,
-  InternalMovement,
-  LatestScannedProducts,
-  Login,
-  ProductOrder,
-  Reading,
-  Scanner,
-} from './pages';
+
+import ClientsPage from './pages/Clients/ClientsPage';
+import CashBalancingPage from './pages/CashBalancing/CashBalancingPage';
+import ConfigModulePage from './pages/ConfigModule/ConfigModulePage';
+import InventoryPage from './pages/Inventory/InventoryPage';
+import ReportsPage from './pages/Resports/ReportsPage';
+import ServicesPage from './pages/ServiceModule/ServicesPage';
+import TaxPage from './pages/Tax/TaxPage';
+import Login from './pages/login/Login';
+import Dashboard from './pages/dashboard/Dashboard';
 
 export const AppRouter = () => {
   const routes = useRoutes([
@@ -17,37 +16,38 @@ export const AppRouter = () => {
       path: '/',
       element: <Login />,
     },
-    {
-      path: 'conductores',
-      element: <Drivers />,
-    },
+    
     {
       path: 'dashboard',
       element: <Dashboard />,
       children: [
         {
-          path: 'productos-escaneados',
-          element: <LatestScannedProducts />,
+          path: 'clients',
+          element: <ClientsPage />,
         },
         {
-          path: 'orden-producto',
-          element: <ProductOrder />,
+          path: 'cash-balancing',
+          element: <CashBalancingPage />, // Debes crear o importar este componente
         },
         {
-          path: 'movimiento-interno',
-          element: <InternalMovement />,
+          path: 'config-module',
+          element: <ConfigModulePage />, // Debes crear o importar este componente
         },
         {
-          path: 'despachos',
-          element: <Dispatches />,
+          path: 'inventory',
+          element: <InventoryPage />, // Debes crear o importar este componente
         },
         {
-          path: 'lectura',
-          element: <Reading />,
+          path: 'reports',
+          element: <ReportsPage />, // Debes crear o importar este componente
         },
         {
-          path: 'scanner',
-          element: <Scanner />,
+          path: 'services',
+          element: <ServicesPage />, // Debes crear o importar este componente
+        },
+        {
+          path: 'tax', // Este va fuera de dashboard
+          element: <TaxPage />, // Debes crear o importar este componente
         },
       ],
     },

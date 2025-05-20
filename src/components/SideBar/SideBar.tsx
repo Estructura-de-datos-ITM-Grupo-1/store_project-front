@@ -11,38 +11,38 @@ const Sidebar = () => {
     <aside className="hidden sm:block md:w-auto bg-white h-screen fixed top-0 left-0 pt-16">
       <nav className="text-left px-4 flex flex-col gap-2 py-4">
         <SideberItem
-          routePath="/dashboard/lectura"
-          label="Lectura"
+          routePath="/dashboard/clients"
+          label="Clientes"
           icon={<EyeIcon />}
         />
         <SideberItem
-          routePath="/dashboard/productos-escaneados"
-          label="Últmos escaneados"
+          routePath="/dashboard/cash-balancing"
+          label="Cuadre de Caja"
           icon={<CheckCircleIcon />}
         />
         <SideberItem
-          routePath="/dashboard/orden-producto"
-          label="OP"
+          routePath="/dashboard/config-module"
+          label="Configuración del módulo"
           icon={<DocumentUploadIcon />}
         />
         <SideberItem
-          routePath="/dashboard/movimiento-interno"
-          label="Movimiento interno"
+          routePath="/dashboard/inventory"
+          label="Inventario"
           icon={<MapInIcon />}
         />
         <SideberItem
-          routePath="/dashboard/despachos"
-          label="Despacho"
+          routePath="/dashboard/reports"
+          label="Reportes"
           icon={<TruckIcon />}
         />
         <SideberItem
-          routePath="/dashboard/scanner"
-          label="Escanear"
+          routePath="/dashboard/services"
+          label="Servicios de la compañia"
           icon={<EyeIcon />}
         />
         <SideberItem
-          routePath="/conductores"
-          label="Conductores"
+          routePath="/dashboard/tax"
+          label="Facturación"
           icon={<UserCircle />}
         />
       </nav>
