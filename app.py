@@ -1,90 +1,26 @@
-import streamlit as st
-st.set_page_config(page_title="LuxBeauty Login", layout="wide")
+from flask import Flask, render_template, request, redirect, url_for
 
-st.markdown("""
-    <style>
-    .main {
-        background-color: white;
-    }
-    .login-container {
-        display: flex;
-        height: 100vh;
-    }
-    .left-panel {
-        background-color: #1570EF;
-        color: white;
-        width: 50%;
-        padding: 80px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        font-family: 'Segoe UI', sans-serif;
-    }
-    .left-panel h1 {
-        font-size: 32px;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-    .left-panel p {
-        font-size: 22px;
-        font-weight: 400;
-        margin-top: 30px;
-    }
-    .right-panel {
-        width: 50%;
-        padding: 80px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        font-family: 'Segoe UI', sans-serif;
-    }
-    .input {
-        margin-bottom: 20px;
-    }
-    .login-button, .support-button {
-        width: 100%;
-        padding: 10px;
-        background-color: #1570EF;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-    }
-    .support-button {
-        background-color: white;
-        color: #1570EF;
-        border: 2px solid #1570EF;
-        margin-top: 10px;
-    }
-    </style>
-""", unsafe_allow_html=True)
+app = Flask(__name__)
 
+usuarios = {"admin": "password123"}
 
-st.markdown("""
-<div class="login-container">
-    <div class="left-panel">
-        <h1>LUXBEAUTY LAB</h1>
-        <p>Bienvenido al sitio web<br> donde se gestionan y<br> optimizan procesos laborales.</p>
-    </div>
-    <div class="right-panel">
-        <h2>Inicio de sesión</h2>
-        <div class="input">
-            <label>Correo Electrónico</label><br>
-            <input type="email" placeholder="balamia@gmail.com" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-        </div>
-        <div class="input">
-            <label>Contraseña</label><br>
-            <input type="password" placeholder="Enter your password" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-        </div>
-        <button class="login-button">Ingresar</button>
-        <button class="support-button">Solicitar Soporte</button>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+@app.route("/")
+def login():
+    return render_template("index.html")
 
-#def main():
-#    st.title("Hola, Señor Álvaro 👋")
-#    st.write("¡Bienvenido a tu primera app con Streamlit!")
+@app.route("/auth", methods=["POST"])
+def auth():
+    usuario = request.form.get("usuario")
+    contraseña = request.form.get("contraseña")
 
-#if __name__ == "__main__":
-#    main()
+    if usuario in usuarios and usuarios[usuario] == contraseña:
+        return redirect(url_for("dashboard", username=usuario))
+    else:
+        return "❌ Usuario o contraseña incorrectos. <a href='/'>Volver</a>"
+
+@app.route("/dashboard/<username>")
+def dashboard(username):
+    return f"<h1>Bienvenido, {username} 🎉</h1><p>Panel principal</p>"
+
+if __name__ == "__main__":
+    app.run(debug=True)

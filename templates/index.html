@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxBeauty Lab - Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .right-panel {
+      background-image: url('static/fondo.jpg');
+      background-size: 60% 100%;
+      background-repeat: no-repeat;
+      background-position: right center;
+      position: relative;
+    }
+    .right-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.7);
+      z-index: 1;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <header class="absolute top-4 right-6">
+    <p class="text-sm text-gray-600">All Rights Reserved</p>
+  </header>
+
+  <main class="min-h-screen flex items-center justify-center p-6">
+    <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Left Panel - Welcome Section -->
+      <section class="bg-white rounded-2xl border border-blue-200 p-12 flex flex-col items-center justify-center text-center">
+        <header class="mb-8">
+          <h1 class="text-3xl font-bold text-gray-900 mb-4">Welcome to LuxBeauty Lab</h1>
+          <p class="text-lg text-gray-700 mb-12">Sitio web donde se gestionan y optimizan procesos laborales</p>
+        </header>
+
+        <div class="mb-12">
+          <!-- Logo Image -->
+          <div class="w-64 h-64 mx-auto">
+            <img src="static/logo.jpg" alt="Logo" class="w-full h-full object-contain">
+          </div>
+        </div>
+
+        <footer>
+          <p class="text-gray-600 text-lg">Explore the latest beauty trends.</p>
+        </footer>
+      </section>
+
+      <!-- Right Panel - Login Form -->
+      <section class="bg-white rounded-2xl border border-blue-200 p-12 flex flex-col justify-center right-panel">
+        <div class="relative z-10">
+          <header class="text-center mb-8">
+            <h2 class="text-2xl font-semibold text-gray-900">LuxBeauty Lab Login</h2>
+          </header>
+
+          <form id="loginForm" class="space-y-6">
+            <div>
+              <label for="username" class="sr-only">Username</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter your user"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200"
+                required
+              >
+            </div>
+
+            <div>
+              <label for="password" class="sr-only">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200"
+                required
+              >
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Sign up
+            </button>
+          </form>
+
+          <div class="mt-8 text-center">
+            <button
+              id="supportBtn"
+              class="bg-blue-400 hover:bg-blue-500 text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200"
+            >
+              Solicitar Soporte
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
