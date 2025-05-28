@@ -1,17 +1,40 @@
 body {
-    background-color: #f4f4f4;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'Inter', sans-serif;
 }
 
-.login-container {
-    width: 350px;
-    padding: 20px;
-    background: white;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    text-align: center;
-    margin: auto;
-    margin-top: 100px;
+.right-panel {
+    background-image: url('fondo.jpg');
+    background-size: 60% 100%;
+    background-repeat: no-repeat;
+    background-position: right center;
+    position: relative;
+}
+
+.right-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 1;
+}
+
+/* Estilos para asegurar que "All Rights Reserved" sea visible */
+.rights-header {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    z-index: 30;
+}
+
+@media screen and (max-width: 640px) {
+    .right-panel {
+        background-size: cover;
+    }
+    
+    .rights-header {
+        position: fixed;
+    }
 }

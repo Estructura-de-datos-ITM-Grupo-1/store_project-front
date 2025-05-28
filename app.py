@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+from werkzeug.serving import run_simple
 
 app = Flask(__name__)
 
@@ -23,4 +24,4 @@ def dashboard(username):
     return f"<h1>Bienvenido, {username} 🎉</h1><p>Panel principal</p>"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)
