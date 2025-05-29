@@ -24,6 +24,18 @@ def cargar_movimientos_inventario():
     }
     return pd.DataFrame(data)
 
+def obtener_rango_fechas(modo, hoy):
+    if modo == "Diario":
+        return hoy, hoy
+    elif modo == "Semanal":
+        return hoy - pd.Timedelta(days=7), hoy
+    elif modo == "Mensual":
+        return hoy - pd.DateOffset(months=1), hoy
+    elif modo == "Anual":
+        return hoy - pd.DateOffset(years=1), hoy
+    return hoy, hoy
+
+
 def filtrar_movimientos(df, fecha_inicio, fecha_fin, tipos):
     mask = (
         (df['Fecha'] >= pd.to_datetime(fecha_inicio)) &

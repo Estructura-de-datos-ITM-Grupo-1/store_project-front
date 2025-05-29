@@ -1,4 +1,6 @@
 import streamlit as st
+from streamlit_option_menu import option_menu
+
 
 # Configuración inicial
 st.set_page_config(page_title="LuxBeauty Lab", layout="wide")
@@ -36,24 +38,31 @@ st.sidebar.markdown('<div class="sidebar-title">LUXBEAUTY LAB</div>', unsafe_all
 #st.sidebar.markdown("LUXBEAUTY LAB")
 st.sidebar.markdown("---")
 
-menu = st.sidebar.radio(
-    "Navegación",
-    [
-        "Gestión de clientes",
-        "Gestión de servicios",
-        "Gestión de inventarios",
-        "Reportes",
-        "Facturación",
-        "Cuadre de caja",
-        "Solicitar Soporte",
-        "Seguridad y Accesos"
-    ],
-    label_visibility="collapsed"
-)
-
-# Botón de configuración
-st.sidebar.markdown("---")
-st.sidebar.button("⚙️ CONFIGURACIÓN")
+# Agregar al menú
+with st.sidebar:
+    menu = option_menu(
+        None,
+        [
+            "Gestión de clientes",
+            "Gestión de servicios",
+            "Gestión de inventarios",
+            "Reportes",
+            "Facturación",
+            "Cuadre de caja",
+            "Solicitar Soporte",
+            "Seguridad y Accesos",
+            "Configuración"
+        ],
+        icons=["people", "scissors", "box", "bar-chart", "receipt", "cash-coin", "question-circle", "shield-lock", "gear"],
+        default_index=0,
+        menu_icon="cast",
+        styles={
+            "container": {"padding": "0!important", "background-color": "#1f77b4"},
+            "icon": {"color": "white", "font-size": "18px"},
+            "nav-link": {"font-size": "16px", "color": "white", "text-align": "left", "margin": "0px"},
+            "nav-link-selected": {"background-color": "#145A8A"},
+        }
+    )
 
 #Importación dinámica según selección
 if menu == "Gestión de clientes":
@@ -87,3 +96,7 @@ elif menu == "Reportes":
 #elif menu == "Seguridad y Accesos":
  #   import secciones.seguridad as seguridad
 #    seguridad.pantalla_seguridad()
+
+elif menu == "Configuración":
+    import secciones.configuracion as configuracion
+    configuracion.pantalla_configuracion()
