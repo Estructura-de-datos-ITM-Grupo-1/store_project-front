@@ -1,18 +1,15 @@
-// Form validation and interaction handling
 document.addEventListener('DOMContentLoaded', function() {
   const loginForm = document.getElementById('loginForm');
   const supportBtn = document.getElementById('supportBtn');
   const usernameInput = document.getElementById('username');
   const passwordInput = document.getElementById('password');
 
-  // Form submission handler
-  loginForm.addEventListener('submit', function(e) {
+  loginForm.addEventListener('submit', async function(e) { // Added 'async'
     e.preventDefault();
     
     const username = usernameInput.value.trim();
     const password = passwordInput.value.trim();
 
-    // Basic validation
     if (!username || !password) {
       showMessage('Please fill in all fields', 'error');
       return;
@@ -28,45 +25,52 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    // Simulate login process
     showMessage('Signing up...', 'info');
-    
-    setTimeout(() => {
-      showMessage('Welcome to LuxBeauty Lab! Registration successful.', 'success');
-      // Here you would typically redirect to the dashboard
-      // window.location.href = '/dashboard';
-    }, 1500);
+
+    try {
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        showMessage(data.message, 'success');
+        // window.location.href = '/dashboard';
+      } else {
+        showMessage(data.message, 'error');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      showMessage('An error occurred during login. Please try again.', 'error');
+    }
   });
 
-  // Support button handler
   supportBtn.addEventListener('click', function() {
     showMessage('Support request submitted. We will contact you soon.', 'info');
   });
 
-  // Input focus effects
   [usernameInput, passwordInput].forEach(input => {
     input.addEventListener('focus', function() {
-      this.parentElement.classList.add('ring-2', 'ring-blue-500');
     });
 
     input.addEventListener('blur', function() {
-      this.parentElement.classList.remove('ring-2', 'ring-blue-500');
     });
   });
 
-  // Show message function
   function showMessage(message, type) {
-    // Remove existing messages
     const existingMessage = document.querySelector('.message-toast');
     if (existingMessage) {
       existingMessage.remove();
     }
 
-    // Create message element
     const messageEl = document.createElement('div');
     messageEl.className = `message-toast fixed top-4 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg text-white font-medium z-50 transition-all duration-300`;
     
-    // Set color based on type
     switch(type) {
       case 'success':
         messageEl.classList.add('bg-green-500');
@@ -84,13 +88,11 @@ document.addEventListener('DOMContentLoaded', function() {
     messageEl.textContent = message;
     document.body.appendChild(messageEl);
 
-    // Animate in
     setTimeout(() => {
       messageEl.style.opacity = '1';
       messageEl.style.transform = 'translateX(-50%) translateY(0)';
     }, 100);
 
-    // Remove after 3 seconds
     setTimeout(() => {
       messageEl.style.opacity = '0';
       messageEl.style.transform = 'translateX(-50%) translateY(-20px)';
@@ -102,7 +104,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 3000);
   }
 
-  // Add smooth animations to form elements
   const formElements = document.querySelectorAll('input, button');
   formElements.forEach(element => {
     element.addEventListener('mouseenter', function() {
@@ -114,8 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Logo animation on page load
-  const logo = document.querySelector('svg');
+  const logo = document.querySelector('img[alt="LuxBeauty Lab Logo"]');
   if (logo) {
     logo.style.opacity = '0';
     logo.style.transform = 'scale(0.8)';
@@ -128,9 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Responsive behavior
 window.addEventListener('resize', function() {
-  // Adjust layout for mobile devices
   const isMobile = window.innerWidth < 1024;
   const mainContainer = document.querySelector('main > div');
   

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuxBeauty Lab - Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .logo-animation {
+      animation: logoFloat 3s ease-in-out infinite;
+    }
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .message-toast {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-20px);
+    }
+    .login-panel-bg {
+      background-image: url('static/fondo.jpg');
+      background-size: cover; 
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative; 
+      overflow: hidden;
+    }
+    .login-panel-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.7); 
+      backdrop-filter: blur(5px); 
+      z-index: 1; 
+    }
+    .login-panel-bg > div {
+      position: relative;
+      z-index: 2; 
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <main class="min-h-screen flex items-center justify-center px-6 pt-16 relative"> <header class="absolute top-4 right-6 z-10"> <p class="text-sm text-gray-600">All Rights Reserved</p>
+    </header>
+
+    <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <section class="bg-white rounded-2xl border border-blue-200 p-12 flex flex-col items-center justify-center text-center shadow-lg">
+        <header class="mb-8">
+          <h1 class="text-3xl font-bold text-gray-900 mb-4">Welcome to LuxBeauty Lab</h1>
+          <p class="text-lg text-gray-700 mb-12">Sitio web donde se gestionan y optimizan procesos laborales</p>
+        </header>
+
+        <div class="mb-12 logo-animation">
+          <img src="static/logo.jpg" alt="LuxBeauty Lab Logo" class="w-64 h-64 mx-auto object-contain rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300">
+        </div>
+
+        <footer>
+          <p class="text-gray-600 text-lg">Explore the latest beauty trends.</p>
+        </footer>
+      </section>
+
+      <section class="bg-white rounded-2xl border border-blue-200 p-12 flex flex-col justify-center shadow-lg login-panel-bg">
+        <div class="relative z-10">
+          <header class="text-center mb-8">
+            <h2 class="text-2xl font-semibold text-gray-900">LuxBeauty Lab Login</h2>
+          </header>
+
+          <form id="loginForm" class="space-y-6">
+            <div>
+              <label for="username" class="sr-only">Username</label>
+              <input 
+                type="text" 
+                id="username" 
+                name="username"
+                placeholder="Enter your user" 
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 hover:shadow-md"
+                required
+              >
+            </div>
+
+            <div>
+              <label for="password" class="sr-only">Password</label>
+              <input 
+                type="password" 
+                id="password" 
+                name="password"
+                placeholder="Enter your password" 
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 hover:shadow-md"
+                required
+              >
+            </div>
+
+            <button 
+              type="submit" 
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 hover:shadow-lg transform hover:-translate-y-0.5"
+            >
+              Sign up
+            </button>
+          </form>
+
+          <div class="mt-20 text-right mb-4"> 
+            <button 
+              id="supportBtn"
+              class="bg-blue-400 hover:bg-blue-500 text-white font-medium py-2 px-6 rounded-lg transition-all duration-200 hover:shadow-lg transform hover:-translate-y-0.5"
+            >
+              Solicitar Soporte
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('loginForm');
+      const supportBtn = document.getElementById('supportBtn');
+      const usernameInput = document.getElementById('username');
+      const passwordInput = document.getElementById('password');
+
+      loginForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        if (!username || !password) {
+          showMessage('Please fill in all fields', 'error');
+          return;
+        }
+
+        if (username.length < 3) {
+          showMessage('Username must be at least 3 characters long', 'error');
+          return;
+        }
+
+        if (password.length < 6) {
+          showMessage('Password must be at least 6 characters long', 'error');
+          return;
+        }
+
+        showMessage('Logging in...', 'info');
+
+        try {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+  
+          if (username === 'user@example.com' && password === 'password123') {
+            showMessage('¡Inicio de sesión exitoso!', 'success');
+            setTimeout(() => {
+              showMessage('Redirecting to dashboard...', 'info');
+            }, 1500);
+          } else {
+            showMessage('Usuario o contraseña incorrectos', 'error');
+          }
+        } catch (error) {
+          console.error('Error during login:', error);
+          showMessage('An error occurred during login. Please try again.', 'error');
+        }
+      });
+
+      supportBtn.addEventListener('click', function() {
+        showMessage('Support request submitted. We will contact you soon.', 'info');
+      });
+
+      [usernameInput, passwordInput].forEach(input => {
+        input.addEventListener('focus', function() {
+          this.style.transform = 'translateY(-1px)';
+        });
+
+        input.addEventListener('blur', function() {
+          this.style.transform = 'translateY(0)';
+        });
+      });
+
+      function showMessage(message, type) {
+        const existingMessage = document.querySelector('.message-toast');
+        if (existingMessage) {
+          existingMessage.remove();
+        }
+
+        const messageEl = document.createElement('div');
+        messageEl.className = `message-toast fixed top-4 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg text-white font-medium z-50 transition-all duration-300`;
+        
+        switch(type) {
+          case 'success':
+            messageEl.classList.add('bg-green-500');
+            break;
+          case 'error':
+            messageEl.classList.add('bg-red-500');
+            break;
+          case 'info':
+            messageEl.classList.add('bg-blue-500');
+            break;
+          default:
+            messageEl.classList.add('bg-gray-500');
+        }
+
+        messageEl.textContent = message;
+        document.body.appendChild(messageEl);
+
+        setTimeout(() => {
+          messageEl.style.opacity = '1';
+          messageEl.style.transform = 'translateX(-50%) translateY(0)';
+        }, 100);
+
+        setTimeout(() => {
+          messageEl.style.opacity = '0';
+          messageEl.style.transform = 'translateX(-50%) translateY(-20px)';
+          setTimeout(() => {
+            if (messageEl.parentNode) {
+              messageEl.remove();
+            }
+          }, 300);
+        }, 3000);
+      }
+
+      const formElements = document.querySelectorAll('input, button');
+      formElements.forEach(element => {
+        element.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-1px)';
+        });
+
+        element.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+        });
+      });
+
+      const logo = document.querySelector('img[alt="LuxBeauty Lab Logo"]');
+      if (logo) {
+        logo.style.opacity = '0';
+        logo.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+          logo.style.transition = 'all 0.8s ease-out';
+          logo.style.opacity = '1';
+          logo.style.transform = 'scale(1)';
+        }, 300);
+      }
+    });
+
+    window.addEventListener('resize', function() {
+      const isMobile = window.innerWidth < 1024;
+      const mainContainer = document.querySelector('main > div');
+      
+      if (isMobile) {
+        mainContainer.classList.remove('lg:grid-cols-2');
+        mainContainer.classList.add('grid-cols-1');
+      } else {
+        mainContainer.classList.add('lg:grid-cols-2');
+      }
+    });
+  </script>
+</body>
+</html>

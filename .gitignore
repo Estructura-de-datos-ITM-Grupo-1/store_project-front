@@ -1,25 +1,62 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# Archivos y directorios generados por Python
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+build/
+dist/
+*.egg-info/
+htmlcov/
+.pytest_cache/
+.tox/
+.mypy_cache/
+
+# Archivos y directorios de entornos de desarrollo/IDE
+.vscode/        # Si usas VS Code
+.idea/          # Si usas PyCharm u otros IDE de JetBrains
+*.sublime-project
+*.sublime-workspace
+
+# Archivos de logs y bases de datos locales
+*.log
+*.sqlite3
+*.db
+
+# Archivos de configuración de npm/Node.js (aunque tu proyecto principal es Flask,
+# los tienes ahí, quizás por alguna herramienta de frontend o si Tailwind se instaló vía npm)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.pnpm-store/
+package-lock.json   # Esto sí debe ser rastreado si es una librería de frontend de uso crítico
+                    # para el proyecto, pero si solo es para la construcción de Tailwind,
+                    # se puede ignorar si no quieres forzar esa versión específica de npm/yarn.
+                    # Sin embargo, generalmente se recomienda mantenerlo.
+                    # Pero dado que tu proyecto es principalmente Flask, y estos son
+                    # remanentes de una plantilla, es seguro ignorarlos si no los utilizas.
+package.json        # Lo mismo que package-lock.json
+
+# Archivos temporales del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos temporales de Vite (si los generara, aunque tu app no es React/Vite)
+# dist/             # Ya cubierto por la sección de Python si es de build
+# .vite/
+
+# Archivos de configuración de Nginx (si es específico de tu entorno de despliegue local)
+nginx.conf          # Si este archivo tiene configuraciones sensibles o específicas de tu máquina, ignóralo
+                    # Si es una configuración genérica para despliegue, podrías querer incluirlo.
+                    # Pero por seguridad, si no sabes, ignóralo primero.
+# Archivos de entorno y configuración local
+.env
+config.py
+
+# Archivos temporales adicionales
+*.tmp
+*.bak

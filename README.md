@@ -1,30 +1,71 @@
-# React + TypeScript + Vite
+# LuxBeauty Lab Login
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esta es una aplicación web sencilla para el inicio de sesión de LuxBeauty Lab. Gestiona y optimiza procesos laborales a través de su interfaz de usuario.
 
-Currently, two official plugins are available:
+## Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* Interfaz de inicio de sesión.
+* Validación básica de credenciales (demo).
+* Diseño responsivo.
+* Fondo difuminado en el panel de login.
 
-## Expanding the ESLint configuration
+## Tecnologías Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+* **Backend:** Python 3, Flask
+* **Frontend:** HTML, Tailwind CSS, JavaScript
+* **Otros:** Pip (administrador de paquetes de Python)
 
-- Configure the top-level `parserOptions` property like this:
+## Requisitos Previos
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Asegúrate de tener instalado lo siguiente en tu sistema:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+* Python 3.x
+* pip (viene con Python)
+
+## Configuración e Instalación
+
+Sigue estos pasos para configurar y ejecutar el proyecto localmente:
+
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone <URL_DE_TU_REPOSITORIO>
+    cd LuxBeautyLab
+    ```
+
+2.  **Crear y activar un entorno virtual:**
+    Es una buena práctica aislar las dependencias de tu proyecto.
+    ```bash
+    python -m venv venv
+    ```
+    * **En Windows:**
+        ```bash
+        .\venv\Scripts\activate
+        ```
+    * **En macOS/Linux:**
+        ```bash
+        source venv/bin/activate
+        ```
+
+3.  **Instalar las dependencias:**
+    Todas las librerías necesarias están listadas en `requirements.txt`.
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+## Cómo Ejecutar la Aplicación
+
+1.  Asegúrate de que tu entorno virtual esté activado.
+2.  Desde la raíz del proyecto, ejecuta el archivo principal de la aplicación:
+    ```bash
+    python app.py
+    ```
+
+## Uso
+
+Una vez que la aplicación esté corriendo, abre tu navegador web y navega a la siguiente dirección:
+
+[http://127.0.0.1:5000](http://127.0.0.1:5000)
+
+Podrás interactuar con la página de inicio de sesión. Las credenciales de demo para probar el inicio de sesión son:
+* **Usuario:** `user@example.com`
+* **Contraseña:** `password123`
