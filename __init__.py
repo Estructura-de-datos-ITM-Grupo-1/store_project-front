@@ -1,0 +1,1 @@
+self.cash_register_file = self.data_path / "cash_register.csv"

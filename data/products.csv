@@ -1,0 +1,5 @@
+id,codigo,nombre,precio,stock,iva_aplicable
+1,PROD001,Labial Rojo Mate,25000,49,True
+2,PROD002,Base Clara Liquida,45000,26,True
+3,PROD003,Brocha para Polvo,15000,11,False
+4,PROD004,Mascara de Pestañas Volum.,30000,27,True
