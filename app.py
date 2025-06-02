@@ -1,15 +1,45 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-
+from utils.config_state import init_config_state
+import utils.config_state 
+import json
+import os
 
 # Configuración inicial
 st.set_page_config(page_title="LuxBeauty Lab", layout="wide")
 
+def cargar_configuracion_visual():
+    CONFIG_VISUAL_FILE = "config_visual.json"
+    if os.path.exists(CONFIG_VISUAL_FILE):
+        with open(CONFIG_VISUAL_FILE, "r") as f:
+            return json.load(f)
+    else:
+        return {
+            "color_primario": "#4CAF50",
+            "color_secundario": "#81C784",
+            "color_fondo": "#ffffff"
+        }
+
+if "config_visual" not in st.session_state:
+    st.session_state["config_visual"] = cargar_configuracion_visual()
+
+init_config_state()
+
+color_fondo = st.session_state["config_visual"]["color_primario"]
+nombre_tienda = st.session_state["config_general"]["nombre"]
+color_principal = st.session_state["config_visual"]["color_primario"]
+formato_fecha = st.session_state["config_sistema"]["formato_fecha"]
+telefono_tienda = st.session_state["config_general"]["telefono"]
+direccion = st.session_state["config_general"]["direccion"]
+
+
+# Estilos CSS
 st.markdown("""
     <style>
         /* Fondo azul sidebar */
         section[data-testid="stSidebar"] {
-            background-color: #1f77b4;
+            background-color: %s;
+        }}; 
             padding-top: 0;
             padding-bottom: 0;
         }
@@ -22,17 +52,34 @@ st.markdown("""
 
         /* Estilo para el título en sidebar */
         .sidebar-title {
+    color: white;
+    font-size: 28px;         /* Un poco más grande */
+    font-weight: 900;        /* Más grueso */
+    margin-top: 8px;
+    margin-bottom: 6px;
+    letter-spacing: 1px;     /* Espaciado entre letras */
+    text-transform: uppercase; /* Mayúsculas para dar fuerza */
+}
+        /* Estilo para el contacto */
+        .sidebar-contact {
             color: white;
-            font-size: 25px;
-            font-weight: bold;
-            margin-top: 8px;
-            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 400;
+            opacity: 0.8;
+            margin-bottom: 10px;
         }
     </style>
-""", unsafe_allow_html=True)
+"""  % color_fondo, unsafe_allow_html=True)
 
-# Mostrar título con clase CSS en sidebar
-st.sidebar.markdown('<div class="sidebar-title">LUXBEAUTY LAB</div>', unsafe_allow_html=True)
+# Contenido HTML aplicado con estilo
+st.sidebar.markdown(
+    f"""
+    <div class="sidebar-title">{nombre_tienda}</div>
+    <div class="sidebar-contact">📞 {telefono_tienda}</div>
+    <div class="sidebar-contact">📍 {direccion}</div>
+    """,
+    unsafe_allow_html=True
+)
 
 # Menú lateral
 #st.sidebar.markdown("LUXBEAUTY LAB")
@@ -57,12 +104,17 @@ with st.sidebar:
         default_index=0,
         menu_icon="cast",
         styles={
-            "container": {"padding": "0!important", "background-color": "#1f77b4"},
+            "container": {"padding": "0!important", "background-color": color_principal},
             "icon": {"color": "white", "font-size": "18px"},
             "nav-link": {"font-size": "16px", "color": "white", "text-align": "left", "margin": "0px"},
-            "nav-link-selected": {"background-color": "#145A8A"},
+            "nav-link-selected": {"background-color": "rgba(255, 255, 255, 0.1)"},
         }
     )
+
+    # Menú lateral
+    #st.sidebar.markdown("LUXBEAUTY LAB")
+    st.sidebar.markdown("---")
+
 
 #Importación dinámica según selección
 if menu == "Gestión de clientes":
