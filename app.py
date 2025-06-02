@@ -85,9 +85,9 @@ elif menu == "Reportes":
 #    import secciones.facturacion as facturacion
 #    facturacion.pantalla_facturacion()
 
-#elif menu == "Cuadre de caja":
-#    import secciones.cuadre_caja as caja
-#    caja.pantalla_cuadre_caja()
+elif menu == "Cuadre de caja":
+   import secciones.cuadre_caja as caja
+   caja.pantalla_cuadre_caja()
 
 #elif menu == "Solicitar Soporte":
 #    import secciones.soporte as soporte
