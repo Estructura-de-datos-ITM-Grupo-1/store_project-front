@@ -59,3 +59,22 @@ def guardar_asignacion_usuarios(rol, lista_usuarios):
     # Por ahora simulamos con un print o logging
     print(f"Guardando usuarios {lista_usuarios} para el rol {rol}")
     return True
+
+# backend_logic/configuracion.py
+
+def guardar_configuracion_visual(color_primario, color_secundario):
+    print("Guardando configuración visual...")
+    print(f"Color primario: {color_primario}")
+    print(f"Color secundario: {color_secundario}")
+    # Aquí se guardaría en una BD o archivo de configuración real
+    return True
+
+# backend_logic/configuracion.py
+
+def guardar_configuracion_sistema(formato_fecha, prefijo_factura, consecutivo_inicial):
+    print("Guardando configuración del sistema...")
+    print(f"Formato fecha: {formato_fecha}")
+    print(f"Prefijo factura: {prefijo_factura}")
+    print(f"Consecutivo inicial: {consecutivo_inicial}")
+    # Simulación de guardado en BD o archivo
+    return True

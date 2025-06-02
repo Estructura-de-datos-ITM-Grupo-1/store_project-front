@@ -10,7 +10,13 @@ def pantalla_configuracion():
         Su finalidad es facilitar una administración ordenada, segura y personalizada del sistema de gestión para la tienda de maquillaje.
     """)
 
-    tabs = st.tabs(["📋 Parámetros Generales", "👤 Administración de Usuarios", "⚙️ Gestión de Roles"])
+    tabs = st.tabs([
+        "📋 Parámetros Generales",
+        "👤 Administración de Usuarios",
+        "⚙️ Gestión de Roles",
+        "🎨 Configuración Visual",
+        "🛠️ Configuración del Sistema"
+    ])
 
     # --- Pestaña 1: Parámetros Generales ---
     with tabs[0]:
@@ -105,3 +111,57 @@ def pantalla_configuracion():
                 st.success(f"Usuarios {', '.join(usuarios_seleccionados)} asignados al rol {rol_seleccionado}")
             else:
                 st.error("Error al guardar la asignación. Intenta nuevamente.")
+
+    # --- Pestaña 4: Configuración Visual y Personalización ---
+    with tabs[3]:
+        st.subheader("🎨 Configuración Visual y Personalización")
+        st.markdown("Personaliza el sistema con la imagen y colores de tu tienda.")
+
+        st.markdown("#### 🖼️ Logo de la tienda")
+        st.image("https://via.placeholder.com/300x100.png?text=LOGO+TIENDA", width=300, caption="Vista previa del logo (imagen de prueba)")
+
+        st.info("Esta es una imagen de prueba. Próximamente se podrá subir un logo personalizado.")
+
+        st.divider()
+
+        st.markdown("#### 🎨 Colores corporativos")
+
+        color_primario = st.color_picker("Color primario del sistema", "#C71585", key="color_primario")
+        color_secundario = st.color_picker("Color secundario del sistema", "#FFB6C1", key="color_secundario")
+
+        if st.button("Guardar diseño visual"):
+            cb.guardar_configuracion_visual(color_primario, color_secundario)
+            st.success("✅ Configuración visual guardada correctamente (modo simulado)")
+
+    # --- Pestaña 5: Configuración del Sistema ---
+    with tabs[4]:
+        st.subheader("🛠️ Configuración del Sistema")
+        st.markdown("""
+        Ajusta parámetros importantes como el formato de fechas y la numeración consecutiva de las facturas.
+        """)
+
+        st.markdown("### 🗓️ Formato de Fecha y Hora")
+        formatos_fecha = {
+            "DD/MM/AAAA": "%d/%m/%Y",
+            "MM-DD-AAAA": "%m-%d-%Y",
+            "AAAA.MM.DD": "%Y.%m.%d",
+            "ISO (AAAA-MM-DD)": "%Y-%m-%d"
+        }
+        formato_seleccionado = st.selectbox("Formato preferido para fechas:", list(formatos_fecha.keys()))
+
+        st.markdown("---")
+
+        st.markdown("### 🧾 Numeración de Facturas")
+        prefijo_factura = st.text_input("Prefijo (opcional)", value="LUX-")
+        consecutivo_inicial = st.number_input("Número inicial del consecutivo", min_value=1, step=1, value=1001)
+        formato_muestra = f"{prefijo_factura}{consecutivo_inicial:05d}"
+
+        st.info(f"Ejemplo de factura: **{formato_muestra}**")
+
+        if st.button("Guardar configuración del sistema"):
+            cb.guardar_configuracion_sistema(
+                formatos_fecha[formato_seleccionado],
+                prefijo_factura,
+                consecutivo_inicial
+            )
+            st.success("✅ Configuración del sistema guardada correctamente (modo simulado)")
