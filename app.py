@@ -96,8 +96,6 @@ with st.sidebar:
             "Reportes",
             "Facturación",
             "Cuadre de caja",
-            "Solicitar Soporte",
-            "Seguridad y Accesos",
             "Configuración"
         ],
         icons=["people", "scissors", "box", "bar-chart", "receipt", "cash-coin", "question-circle", "shield-lock", "gear"],
@@ -125,10 +123,10 @@ if menu == "Gestión de clientes":
 #    import secciones.servicios as servicios
 #    servicios.pantalla_servicios()
 #
-#elif menu == "Gestión de inventarios":
-#    import secciones.inventario as inventario
-#    inventario.pantalla_inventario()
-#
+elif menu == "Gestión de inventarios":
+    import secciones.gestion_inventario as inventario
+    inventario.pantalla_inventario()
+
 elif menu == "Reportes":
     import secciones.reportes as reportes
     reportes.pantalla_reportes()

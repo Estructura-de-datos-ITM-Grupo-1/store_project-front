@@ -15,15 +15,11 @@ def cargar_config_visual():
         # Configuración visual por defecto
         return {
             "color_primario": "#C71585",
-            "color_secundario": "#FFB6C1",
-            "color_fondo": "#ffffff"
         }
 
-def guardar_configuracion_visual(color_primario, color_secundario, color_fondo):
+def guardar_configuracion_visual(color_primario):
     config = {
         "color_primario": color_primario,
-        "color_secundario": color_secundario,
-        "color_fondo": color_fondo
     }
     with open(CONFIG_VISUAL_FILE, "w") as f:
         json.dump(config, f, indent=4)

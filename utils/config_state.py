@@ -4,7 +4,7 @@ import os
 
 CONFIG_VISUAL_FILE = "config_visual.json"
 
-def guardar_configuracion_visual(color_primario, color_secundario, color_fondo):
+def guardar_configuracion_visual(color_primario):
     config = {
         "color_primario": color_primario,
     }
@@ -41,7 +41,7 @@ def update_config_general(nombre, telefono, direccion, leyenda):
         "leyenda": leyenda
     }
 
-def update_config_visual(color_primario, color_secundario, color_fondo):
+def update_config_visual(color_primario):
     st.session_state["config_visual"] = {
         "color_primario": color_primario,
     }

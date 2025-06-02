@@ -90,11 +90,9 @@ def pantalla_configuracion():
                 if u["activo"]:
                     if cols[4].button("Inactivar", key=f"inactivar_{i}"):
                         backend.cambiar_estado_usuario(i, False)
-                        st.experimental_rerun()
                 else:
                     if cols[4].button("Activar", key=f"activar_{i}"):
                         backend.cambiar_estado_usuario(i, True)
-                        st.experimental_rerun()
         else:
             st.info("ℹ️ No hay usuarios registrados aún.")
 
@@ -145,21 +143,11 @@ def pantalla_configuracion():
             value=st.session_state["config_visual"]["color_primario"],
             key="color_primario_picker"
         )
-        color_secundario = st.color_picker(
-            "Color secundario del sistema",
-            value=st.session_state["config_visual"]["color_secundario"],
-            key="color_secundario_picker"
-        )
-        color_fondo = st.color_picker(
-            "Color de fondo de las secciones",
-            value=st.session_state["config_visual"].get("color_fondo", "#ffffff"),
-            key="color_fondo_picker"
-        )
 
         if st.button("Guardar diseño visual", key="guardar_diseno_visual"):
             if color_primario != st.session_state["config_visual"]["color_primario"]:
-                cb.guardar_configuracion_visual(color_primario, color_secundario, color_fondo)
-                update_config_visual(color_primario, color_secundario, color_fondo)
+                cb.guardar_configuracion_visual(color_primario)
+                update_config_visual(color_primario)
                 st.success("✅ Configuración visual guardada correctamente")
             else:
                 st.info("ℹ️ No se realizaron cambios en los colores")
