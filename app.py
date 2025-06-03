@@ -16,8 +16,6 @@ def cargar_configuracion_visual():
     else:
         return {
             "color_primario": "#4CAF50",
-            "color_secundario": "#81C784",
-            "color_fondo": "#ffffff"
         }
 
 if "config_visual" not in st.session_state:
@@ -25,7 +23,6 @@ if "config_visual" not in st.session_state:
 
 init_config_state()
 
-color_fondo = st.session_state["config_visual"]["color_primario"]
 nombre_tienda = st.session_state["config_general"]["nombre"]
 color_principal = st.session_state["config_visual"]["color_primario"]
 formato_fecha = st.session_state["config_sistema"]["formato_fecha"]
@@ -69,7 +66,7 @@ st.markdown("""
             margin-bottom: 10px;
         }
     </style>
-"""  % color_fondo, unsafe_allow_html=True)
+"""  % color_principal, unsafe_allow_html=True)
 
 # Contenido HTML aplicado con estilo
 st.sidebar.markdown(
@@ -120,7 +117,7 @@ if menu == "Gestión de clientes":
     clientes.pantalla_clientes()
 
 elif menu == "Gestión de servicios":
-    import secciones.gestion_inventario as servicios
+    import secciones.gestion_servicios as servicios
     servicios.pantalla_servicios()
 
 elif menu == "Gestión de inventarios":

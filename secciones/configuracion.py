@@ -8,17 +8,6 @@ from utils.config_state import update_config_general, update_config_visual, upda
 # Inicializa session_state si no existe
 init_config_state()
 
-# Aplica el color de fondo directamente aquí
-st.markdown(
-    f"""
-    <style>
-        .main {{
-            background-color: {st.session_state["config_visual"]["color_fondo"]};
-        }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 def pantalla_configuracion():
     st.title("⚙️ Configuración del Sistema")
@@ -131,9 +120,14 @@ def pantalla_configuracion():
         st.subheader("🎨 Configuración Visual y Personalización")
         st.markdown("Personaliza el sistema con la imagen y colores de tu tienda.")
 
-        st.markdown("#### 🖼️ Logo de la tienda")
-        st.image("https://via.placeholder.com/300x100.png?text=LOGO+TIENDA", width=300, caption="Vista previa del logo (imagen de prueba)")
-        st.info("Esta es una imagen de prueba. Próximamente se podrá subir un logo personalizado.")
+        st.image("assets/logo.jpg", width=300, caption="Logo Tienda")
+        logo = st.file_uploader("Cargar nuevo logo", type=["jpg", "png", "jpeg"], key="logo_uploader")
+        if logo is not None:
+            st.image(logo, width=300, caption="Nuevo logo")
+            st.success("Logo cargado correctamente.")
+        else:
+            st.info("Sube una imagen para reemplazar el logo actual.")
+
 
         st.divider()
 
