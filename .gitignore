@@ -1,0 +1,4 @@
+# En tu archivo .gitignore
+__pycache__/
+*.pyc
+*.xlsx

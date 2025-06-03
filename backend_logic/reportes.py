@@ -121,4 +121,7 @@ def generar_datos_financieros(modo="Diario"):
         "Egresos": egresos
     })
 
+def guardar_clientes_crud(df):
+    df.to_excel("data/clientes.xlsx", index=False)
+
     return df

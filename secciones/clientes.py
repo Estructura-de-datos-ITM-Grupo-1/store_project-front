@@ -3,9 +3,6 @@ import pandas as pd
 import backend_logic.reportes as backend_reportes
 
 
-# ==============================================
-# 🖼️ Sidebar bonito y funcional
-# ==============================================
 def sidebar_menu():
     st.sidebar.markdown("## 🌟 Gestión Empresarial", unsafe_allow_html=True)
     st.sidebar.markdown("---")
@@ -20,23 +17,20 @@ def sidebar_menu():
     return menu[seleccion]
 
 
-# ==============================================
-# 🧾 Pantalla de gestión de clientes
-# ==============================================
 def pantalla_clientes():
     st.title("🗂️ Gestión de Clientes")
     st.markdown('<p class="small-desc">Aquí puedes visualizar, editar o agregar clientes al sistema.</p>', unsafe_allow_html=True)
 
     df_clientes = backend_reportes.cargar_clientes()
 
-    # 🔤 Botón para ordenar
+  
     if st.button("🔤 Ordenar clientes A → Z"):
-        df_clientes = df_clientes.sort_values("Customer", ascending=True).reset_index(drop=True)
+        df_clientes = df_clientes.sort_values("Cliente", ascending=True).reset_index(drop=True)
         st.success("Clientes ordenados alfabéticamente por nombre.")
 
     st.markdown("⚠️ *Recuerda presionar Enter o hacer clic fuera de una celda después de editarla para que se registre el cambio.*")
 
-    # Guardar tabla editada en session_state para evitar inconsistencias
+    
     if "clientes_editado" not in st.session_state:
         st.session_state.clientes_editado = df_clientes
 
@@ -65,25 +59,21 @@ def pantalla_clientes():
     with col3:
         st.info("✏️ Puedes editar directamente en la tabla.")
 
-# ==============================================
-# 📄 Otra pantalla de ejemplo
-# ==============================================
+
 def pantalla_otra():
     st.title("📋 Otra Sección")
     st.write("Contenido de ejemplo.")
 
 
-# ==============================================
-# 🚀 Main App
-# ==============================================
+
 def main():
     st.set_page_config(page_title="Dashboard Empresarial", layout="wide", page_icon="📊")
     pagina = sidebar_menu()
 
     if pagina == "clientes":
-        pantalla_gestion_clientes()
+        pantalla_clientes()
     elif pagina == "reportes":
-        st.write("Aquí iría la pantalla de reportes")  # puedes reemplazarlo por pantalla_reportes()
+        st.write("")  
     elif pagina == "otra":
         pantalla_otra()
 
