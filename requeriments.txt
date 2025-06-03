@@ -2,3 +2,5 @@ streamlit
 xlsxwriter
 plotly
 streamlit-extras
+
+sasalkslajslj
