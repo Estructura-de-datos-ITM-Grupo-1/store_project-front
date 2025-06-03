@@ -119,10 +119,10 @@ if menu == "Gestión de clientes":
     import secciones.clientes as clientes
     clientes.pantalla_clientes()
 
-#elif menu == "Gestión de servicios":
-#    import secciones.servicios as servicios
-#    servicios.pantalla_servicios()
-#
+elif menu == "Gestión de servicios":
+    import secciones.gestion_inventario as servicios
+    servicios.pantalla_servicios()
+
 elif menu == "Gestión de inventarios":
     import secciones.gestion_inventario as inventario
     inventario.pantalla_inventario()
@@ -138,14 +138,6 @@ elif menu == "Reportes":
 elif menu == "Cuadre de caja":
    import secciones.cuadre_caja as caja
    caja.pantalla_cuadre_caja()
-
-#elif menu == "Solicitar Soporte":
-#    import secciones.soporte as soporte
-#    soporte.pantalla_soporte()
-
-#elif menu == "Seguridad y Accesos":
- #   import secciones.seguridad as seguridad
-#    seguridad.pantalla_seguridad()
 
 elif menu == "Configuración":
     import secciones.configuracion as configuracion
