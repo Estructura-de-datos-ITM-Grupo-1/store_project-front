@@ -2,5 +2,5 @@ streamlit
 xlsxwriter
 plotly
 streamlit-extras
-
-sasalkslajslj
+Pandas
+PyJWT
