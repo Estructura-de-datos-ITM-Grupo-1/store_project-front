@@ -152,7 +152,7 @@ def pantalla_inventario():
 
     # --- Alertas de Inventario ---
     st.title("🚨 Alertas de Inventario")
-
+    
     bajo_stock = inventario.obtener_productos_bajo_stock()
     alta_demanda = inventario.obtener_productos_alta_demanda()
 
