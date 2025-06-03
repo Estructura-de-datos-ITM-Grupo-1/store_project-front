@@ -8,17 +8,6 @@ from utils.config_state import update_config_general, update_config_visual, upda
 # Inicializa session_state si no existe
 init_config_state()
 
-# Aplica el color de fondo directamente aquí
-st.markdown(
-    f"""
-    <style>
-        .main {{
-            background-color: {st.session_state["config_visual"]["color_fondo"]};
-        }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 def pantalla_configuracion():
     st.title("⚙️ Configuración del Sistema")
