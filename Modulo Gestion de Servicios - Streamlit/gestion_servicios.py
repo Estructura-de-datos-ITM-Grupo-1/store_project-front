@@ -30,6 +30,19 @@ def obtener_rol_desde_token(token):
 
 rol_usuario = obtener_rol_desde_token(st.session_state.token)
 
+def obtener_usuario_desde_token(token):
+    try:
+        decoded = jwt.decode(token, CLAVE_SECRETA, algorithms=["HS256"])
+        return {
+            "user_id": decoded.get("user_id"),
+            "role": decoded.get("role", "user")
+        }
+    except jwt.ExpiredSignatureError:
+        st.error("Sesión expirada. Vuelve a iniciar sesión.")
+    except jwt.InvalidTokenError:
+        st.error("Token inválido.")
+    return None
+
 # --- Configuración de la app ---
 st.set_page_config(page_title="LuxBeauty Lab", layout="wide")
 
@@ -169,13 +182,17 @@ with tab1:
                     servicio["Descripción"] = nueva_desc
                     servicio["Precio"] = nuevo_precio
 
+                    usuario_actual = obtener_usuario_desde_token(st.session_state.token)
+
                     st.session_state.historial.append({
                         "Código": cod_editar,
                         "Descripción anterior": descripcion_anterior,
                         "Descripción nueva": nueva_desc,
                         "Precio anterior": precio_anterior,
                         "Precio nuevo": nuevo_precio,
-                        "Fecha y hora": time.strftime("%Y-%m-%d %H:%M:%S")
+                        "Fecha y hora": time.strftime("%Y-%m-%d %H:%M:%S"),
+                        "Usuario modificador": usuario_actual["user_id"],
+                        "Rol del usuario": usuario_actual["role"]
                     })
 
                     st.success("Servicio actualizado.")
