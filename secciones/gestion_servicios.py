@@ -31,11 +31,6 @@ def pantalla_servicios():
 
     rol_usuario = obtener_rol_desde_token(st.session_state.token)
 
-    # --- Configuración de la app ---
-    
-    if st.sidebar.button("🔒 Cerrar sesión"):
-        st.session_state.clear()
-
     # --- Título principal ---
     st.title("Gestion de Servicios")
 
