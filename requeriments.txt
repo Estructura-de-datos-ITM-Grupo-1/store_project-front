@@ -1,6 +1,9 @@
-streamlit
+streamlit==1.45.1
 xlsxwriter
 plotly
 streamlit-extras
 Pandas
 PyJWT
+openpyxl==3.1.5
+fpdf2==2.8.3
+reportlab==4.4.1
