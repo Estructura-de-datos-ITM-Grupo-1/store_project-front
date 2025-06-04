@@ -1,8 +1,13 @@
 import streamlit as st
+import pandas as pd
+from datetime import datetime
+import json
+import base64
+from pathlib import Path
+from typing import Optional, List, Dict, Any
 from streamlit_option_menu import option_menu
 from utils.config_state import init_config_state
-import utils.config_state 
-import json
+import utils.config_state
 import os
 
 # Configuración inicial
@@ -131,9 +136,9 @@ elif menu == "Reportes":
     import secciones.reportes as reportes
     reportes.pantalla_reportes()
 
-#elif menu == "Facturación":
-#    import secciones.facturacion as facturacion
-#    facturacion.pantalla_facturacion()
+elif menu == "Facturación":
+    import secciones.facturacion as facturacion
+    facturacion.pantalla_facturacion()
 
 elif menu == "Cuadre de caja":
    import secciones.cuadre_caja as caja
