@@ -1,0 +1,11 @@
+id,codigo,nombre,precio,temporal
+1,SERV001,Manicura Completa,35000,FALSE
+2,SERV002,Maquillaje Social,80000,FALSE
+3,SERV003,Peinado para Eventos,60000,FALSE
+4,SERV004,Perfilado de Cejas,25000,FALSE  
+5,SERV005,Extensión de Pestañas,95000,FALSE  
+6,SERV006,Limpieza Facial,45000,FALSE  
+7,SERV007,Hidratación y Nutrición Facial,60000,FALSE  
+8,SERV008,Uñas Acrílicas,75000,FALSE  
+9,SERV009,Pedicura Spa,40000,FALSE  
+10,SERV010,Maquillaje para Novias,120000,FALSE  

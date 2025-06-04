@@ -7,8 +7,6 @@ from pathlib import Path
 from typing import Optional, List, Dict, Any
 import io 
 import zipfile 
-
-# Importar desde tu código existente
 from models import MedioPago, Cliente, Producto, Servicio, ItemFactura, Factura
 from data_manager import DataManager
 from utils import format_currency, generate_invoice_number, calculate_invoice_totals, set_invoice_number_config, _invoice_prefix, _invoice_suffix
@@ -110,9 +108,6 @@ def show_invoice_details(invoice_row):
         st.metric("Total Final", f"${total:,.0f}" if pd.notna(total) else "$0")
 
 def pantalla_facturacion():
-    """Función principal del módulo de facturación"""
-    
-    # Inicializar data_manager y datos
     data_manager = DataManager()
     
     if 'all_products' not in st.session_state:
@@ -124,8 +119,6 @@ def pantalla_facturacion():
 
     st.header("🧾 Módulo de Facturación")
     st.markdown("---")
-    
-    # Preparar opciones para selectboxes
     product_options = {p.nombre: p for p in st.session_state.all_products}
     service_options = {s.nombre: s for s in st.session_state.all_services}
     client_options = {f"{c.nombre} ({c.documento})": c for c in st.session_state.all_clients}
@@ -216,7 +209,7 @@ def pantalla_facturacion():
             else:
                 selected_item = None
     
-    # Configuración de cantidad, descuento e IVA
+  
     if "_default_quantity" not in st.session_state:
         st.session_state["_default_quantity"] = 1
     if "_default_discount" not in st.session_state:
@@ -267,7 +260,6 @@ def pantalla_facturacion():
 
     st.markdown("---")
 
-    # Mostrar productos en la factura
     st.subheader("Productos en la Factura")
     if st.session_state.invoice_items:
         invoice_items_data = []
@@ -329,8 +321,6 @@ def pantalla_facturacion():
         st.info("No hay ítems añadidos a la factura.")
 
     st.markdown("---")
-    
-    # Detalles finales de factura
     st.subheader("Detalles Finales de Factura")
     col1, col2 = st.columns(2)
     
@@ -378,7 +368,6 @@ def pantalla_facturacion():
             if success:
                 st.success(message)
                 
-                # Generar PDF
                 pdf_output_path = Path("data") / "invoices" / f"factura_{new_invoice.numero}.pdf"
                 logo_path = Path("assets/logo_prepared.png") 
                 if not logo_path.exists():   
@@ -401,7 +390,6 @@ def pantalla_facturacion():
     st.markdown("---")
     st.markdown("---") 
     
-    # Registro de facturas emitidas
     st.header("Registro de Facturas Emitidas")
     invoices_df = data_manager.get_all_invoices_registro()
 
@@ -425,7 +413,6 @@ def pantalla_facturacion():
         with col_search3:
             invoice_search = st.text_input("Buscar por Número de Factura", key="invoice_number_search")
 
-        # Aplicar filtros
         filtered_df = invoices_df.copy()
         
         if selected_client_filter != "Todos":
@@ -441,7 +428,6 @@ def pantalla_facturacion():
         st.subheader("Historico de Facturas")
         
         if not filtered_df.empty:
-            # Encabezados
             col1, col2, col3, col4, col5, col6, col7, col8 = st.columns([1.5, 2, 1.8, 2.5, 2, 1.5, 2, 0.8])
             with col1:
                 st.markdown("**Número**")
@@ -461,8 +447,6 @@ def pantalla_facturacion():
                 st.markdown("**Ver**")
         
             st.markdown("---")
-            
-            # Mostrar cada factura
             for idx, row in filtered_df.iterrows():
                 col1, col2, col3, col4, col5, col6, col7, col8 = st.columns([1.5, 2, 1.8, 2.5, 2, 1.5, 2, 0.8])
             
@@ -501,15 +485,14 @@ def pantalla_facturacion():
                 with col8:
                     invoice_key = f'show_invoice_{row.get("numero", "")}'
                     if st.button("👁️", key=f"view_{row.get('numero', '')}_{idx}", help="Ver factura completa"):
-                        # Limpiar todos los estados de visualización primero
+                    
                         for key in list(st.session_state.keys()):
                             if key.startswith('show_invoice_'):
                                 del st.session_state[key]
-                        # Establecer solo la factura actual como visible    
+                  
                         st.session_state[invoice_key] = True
                         st.rerun()
-            
-                # Mostrar detalles si la factura está marcada para visualización
+
                 if st.session_state.get(invoice_key, False):
                     with st.expander(f"📄 Detalles de {row.get('numero', 'Factura')}", expanded=True):
                         show_invoice_details(row)

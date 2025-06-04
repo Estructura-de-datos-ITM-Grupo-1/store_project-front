@@ -1,0 +1,11 @@
+id,documento,nombre,telefono,email,direccion
+1,105165301,Ana Lopez,3001112233,ana.lopez@example.com,Calle 10 #20-30
+2,35615894,Juan Perez,3004445566,juan.perez@example.com,Carrera 5 #15-25
+3,6816622,Maria Gomez,3007778899,maria.gomez@example.com,Avenida 3 #5-10
+4,89023145,Carlos Ramirez,3009876543,carlos.ramirez@example.com,Calle 25 #40-50  
+5,45236789,Sofia Torres,3012345678,sofia.torres@example.com,Carrera 8 #12-34  
+6,32659874,Luis Fernandez,3018765432,luis.fernandez@example.com,Avenida 45 #90-12  
+7,78541236,Paula Martinez,3023456789,paula.martinez@example.com,Calle 60 #30-10  
+8,63547812,Diego Castro,3029876543,diego.castro@example.com,Carrera 3 #8-22  
+9,21548763,Laura Vega,3031234567,laura.vega@example.com,Avenida 15 #70-5  
+10,97456321,Andres Gutierrez,3037654321,andres.gutierrez@example.com,Calle 5 #100-20
