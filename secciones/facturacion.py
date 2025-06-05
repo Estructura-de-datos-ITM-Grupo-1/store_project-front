@@ -31,16 +31,34 @@ def validate_invoice_data(client, items, payment_method):
     return len(errors) == 0, errors
 
 def get_table_download_link(df: pd.DataFrame, filename: str, text: str):
+    if df.empty:
+        return f'<span style="color: gray;">{text} (Sin datos)</span>'
     csv = df.to_csv(index=False)
     b64 = base64.b64encode(csv.encode()).decode()
     href = f'<a href="data:file/csv;base64,{b64}" download="{filename}">{text}</a>'
     return href
 
+def get_pdf_download_link(file_path: str, filename: str = None):
+    if not Path(file_path).exists():
+        return None
+        
+    with open(file_path, "rb") as f:
+        pdf_bytes = f.read()
+    b64 = base64.b64encode(pdf_bytes).decode()
+    
+    if not filename:
+        filename = Path(file_path).name
+    
+    href = f'<a href="data:application/pdf;base64,{b64}" download="{filename}">📄 Descargar PDF de Factura</a>'
+    return href
+
 def get_pdf_download_link_auto(file_path: str):
+    """Descarga automática de PDF usando JavaScript"""
     if Path(file_path).exists():
         with open(file_path, "rb") as f:
             pdf_bytes = f.read()
         b64 = base64.b64encode(pdf_bytes).decode()
+        
         
         js_code = f"""
             <script>
@@ -53,7 +71,7 @@ def get_pdf_download_link_auto(file_path: str):
             </script>
         """
         return js_code
-    return "" 
+    return ""
 
 def show_invoice_details(invoice_row):
     col1, col2 = st.columns(2)
@@ -67,6 +85,17 @@ def show_invoice_details(invoice_row):
         st.markdown(f"**💳 Medio de Pago:** {invoice_row.get('medio_pago', 'N/A')}")
         st.markdown(f"**💰 Total:** ${invoice_row.get('total_factura', invoice_row.get('total', 0)):,.0f}")
         st.markdown(f"**📝 Observaciones:** {invoice_row.get('observaciones', 'Sin observaciones')}")
+    
+    invoice_number = invoice_row.get('numero', '')
+    pdf_path = Path("data") / "invoices" / f"factura_{invoice_number}.pdf"
+    
+    if pdf_path.exists():
+        pdf_link = get_pdf_download_link(str(pdf_path), f"factura_{invoice_number}.pdf")
+        if pdf_link:
+            st.markdown(pdf_link, unsafe_allow_html=True)
+    else:
+        st.warning("PDF de factura no encontrado")
+    
     
     if 'items_json' in invoice_row and invoice_row['items_json']:
         items = invoice_row['items_json']
@@ -335,6 +364,7 @@ def pantalla_facturacion():
         
     current_invoice_num_preview = generate_invoice_number(preview=True)
     st.info(f"Número de Factura Propuesto: {current_invoice_num_preview}")
+    generated_invoice_pdf_path = None
 
     if st.button("Generar Factura", key="generate_invoice_button"):
         is_valid, validation_errors = validate_invoice_data(
@@ -367,30 +397,54 @@ def pantalla_facturacion():
             success, message = data_manager.save_invoice_registro(new_invoice)
             if success:
                 st.success(message)
+                pdf_dir = Path("data") / "invoices"
+                pdf_dir.mkdir(parents=True, exist_ok=True)
                 
                 pdf_output_path = Path("data") / "invoices" / f"factura_{new_invoice.numero}.pdf"
                 logo_path = Path("assets/logo_prepared.png") 
                 if not logo_path.exists():   
                     logo_path = Path("assets/logo.jpg") if Path("assets/logo.jpg").exists() else None
+                    
+                try:
+                    generate_invoice_pdf(new_invoice, str(pdf_output_path), str(logo_path) if logo_path else None)
+                    
+                    if pdf_output_path.exists():
+                        st.success(f"Factura PDF generada en: {pdf_output_path}")
+                        pdf_download_link = get_pdf_download_link(str(pdf_output_path), f"factura_{new_invoice.numero}.pdf")
+                        if pdf_download_link:
+                            st.markdown("### 📄 Descargar Factura")
+                            st.markdown(pdf_download_link, unsafe_allow_html=True)
+                            
+                            import streamlit.components.v1 as components
+                            components.html(get_pdf_download_link_auto(str(pdf_output_path)), height=0, width=0)
+                            st.info("La factura se ha descargado automáticamente. Revisa tu carpeta de descargas.")
+                            
+                            generated_invoice_pdf_path = str(pdf_output_path)
+                            
+                    else:
+                        st.error("❌ Error: El archivo PDF no se pudo crear.")
+                        
+                except Exception as e:
+                    st.error(f"❌ Error al generar el PDF: {str(e)}")
                 
-                generate_invoice_pdf(new_invoice, str(pdf_output_path), str(logo_path) if logo_path else None)
-                
-                if pdf_output_path.exists():
-                    st.success(f"Factura PDF generada en: {pdf_output_path}")
-                    st.markdown(get_pdf_download_link_auto(str(pdf_output_path)), unsafe_allow_html=True)
-                    st.info("La factura se ha descargado automáticamente. Revisa tu carpeta de descargas.")
-                else:
-                    st.error("Error al generar el PDF de la factura.")
-
                 st.session_state.invoice_items = []
-                st.rerun() 
-            else:
-                st.error(f"Error al guardar factura: {message}")
+                st.rerun()
 
     st.markdown("---")
     st.markdown("---") 
     
     st.header("Registro de Facturas Emitidas")
+    
+    if 'filtered_df' not in locals():
+        filtered_df = pd.DataFrame()
+        
+    if not filtered_df.empty:
+        st.markdown(get_table_download_link(filtered_df, "facturas.csv", "📥 Descargar Facturas en CSV"), unsafe_allow_html=True)
+    
+    else:
+        st.info("No hay datos disponibles para descargar")
+    st.markdown(get_table_download_link(filtered_df, "facturas.csv", "📥 Descargar Facturas en CSV"), unsafe_allow_html=True)
+
     invoices_df = data_manager.get_all_invoices_registro()
 
     if not invoices_df.empty:
@@ -423,11 +477,43 @@ def pantalla_facturacion():
             
         if invoice_search:
             filtered_df = filtered_df[filtered_df['numero'].str.contains(invoice_search, case=False, na=False)]
+        st.markdown("### 📥 Exportar Datos")
+        col_download1, col_download2 = st.columns(2)
+        
+        with col_download1:
+            if not filtered_df.empty:
+                st.markdown(get_table_download_link(filtered_df, "facturas_filtradas.csv", "📊 Descargar Facturas Filtradas (CSV)"), unsafe_allow_html=True)
+            else:
+                st.info("No hay datos filtrados para descargar")
+                
+        with col_download2:
+            if not invoices_df.empty:
+                st.markdown(get_table_download_link(invoices_df, "todas_las_facturas.csv", "📋 Descargar Todas las Facturas (CSV)"), unsafe_allow_html=True)
+            else:
+                st.info("No hay facturas disponibles")
         
         st.markdown("---")
         st.subheader("Historico de Facturas")
         
         if not filtered_df.empty:
+            col_metric1, col_metric2, col_metric3, col_metric4 = st.columns(4)
+            
+            with col_metric1:
+                st.metric("Total Facturas", len(filtered_df))
+            with col_metric2:
+                total_ventas = filtered_df['total_factura'].fillna(0).sum()
+                st.metric("Total Ventas", f"${total_ventas:,.0f}")
+            with col_metric3:
+                if len(filtered_df) > 0:
+                    promedio = total_ventas / len(filtered_df)
+                    st.metric("Promedio por Factura", f"${promedio:,.0f}")
+                else:
+                    st.metric("Promedio por Factura", "$0")
+            with col_metric4:
+                clientes_unicos = filtered_df['cliente_nombre'].nunique()
+                st.metric("Clientes Únicos", clientes_unicos)
+            
+            st.markdown("---")
             col1, col2, col3, col4, col5, col6, col7, col8 = st.columns([1.5, 2, 1.8, 2.5, 2, 1.5, 2, 0.8])
             with col1:
                 st.markdown("**Número**")
@@ -467,7 +553,12 @@ def pantalla_facturacion():
                     st.text(str(row.get('cliente_documento', '')))
             
                 with col4:
+                    cliente_nombre = str(row.get('cliente_nombre', ''))
                     st.text(str(row.get('cliente_nombre', '')))
+                    if len(cliente_nombre) > 20:
+                        st.text(cliente_nombre[:20] + "...")
+                    else:
+                        st.text(cliente_nombre)
             
                 with col5:
                     st.text(str(row.get('medio_pago', '')))
@@ -480,7 +571,12 @@ def pantalla_facturacion():
                         st.text('$0')
             
                 with col7:
+                    obs = str(row.get('observaciones', ''))
                     st.text(str(row.get('observaciones', '')))
+                    if len(obs) > 15:
+                        st.text(obs[:15] + "...")
+                    else:
+                        st.text(obs)
             
                 with col8:
                     invoice_key = f'show_invoice_{row.get("numero", "")}'

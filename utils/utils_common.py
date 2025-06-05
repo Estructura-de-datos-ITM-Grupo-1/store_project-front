@@ -10,7 +10,7 @@ CONFIG_FILE_PATH = Path("invoice_config.json")
 _invoice_prefix = "FAC"
 _invoice_suffix = ""
 _current_invoice_number = 1
-
+_last_invoice_number=0
 def _load_config():
     global _last_invoice_number, _invoice_prefix, _invoice_suffix
     if CONFIG_FILE_PATH.exists():

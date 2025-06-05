@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Optional, List, Dict, Any
 from streamlit_option_menu import option_menu
 from utils.config_state import init_config_state
+from utils import format_currency
 import utils.config_state
 import os
 
@@ -139,7 +140,7 @@ elif menu == "Reportes":
 elif menu == "Facturación":
     import secciones.facturacion as facturacion
     facturacion.pantalla_facturacion()
-
+    
 elif menu == "Cuadre de caja":
    import secciones.cuadre_caja as caja
    caja.pantalla_cuadre_caja()

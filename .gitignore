@@ -1,0 +1,29 @@
+# Compilados de Python
+__pycache__/
+*.pyc
+
+# Entornos virtuales
+venv/
+venv_test/
+
+# Archivos de configuración del entorno
+.replit
+
+# Archivos temporales del sistema/editor
+*.log
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+
+# Archivos o carpetas del sistema operativo
+*.bak
+
+# Archivos generados automáticamente (por el sistema o la app)
+data/invoices/  # Solo si esta carpeta guarda facturas generadas dinámicamente
+
+# Node.js (si usas algo de frontend con npm)
+node_modules/
+package-lock.json
+
+data/invoices/
